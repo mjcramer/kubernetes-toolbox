@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubernetes-toolbox 
+spec:
+  containers:
+  - name: kubernetes-toolbox
+    image: docker.io/mjcramer/kubernetes-toolbox:latest
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+

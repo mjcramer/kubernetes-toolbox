@@ -1,7 +1,7 @@
 
-DOCKER_IMAGE := toolbox
-DOCKER_REPOSITORY := mjcramer/toolbox
-DOCKER_TAG := 0.1
+DOCKER_IMAGE := kubernetes-toolbox
+DOCKER_REPOSITORY := mjcramer
+DOCKER_TAG := 0.2
 
 # Mac or Linux?
 UNAME_S := $(shell uname -s)
@@ -36,8 +36,6 @@ endif
 # ifeq ($(strip $(DOCKER_MACHINE_NAME)),)
 # 	DOCKER_MACHINE_ENV = @echo "\nERROR: docker environment cannot be found.\nRun: eval \"\$$(docker-machine env $(DOCKER_MACHINE))\"\n" && exit 1
 # endif
-
-
 
 #
 # Targets
