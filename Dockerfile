@@ -17,6 +17,7 @@ RUN apk add --no-cache jq
 RUN apk add --no-cache iftop 
 RUN apk add --no-cache grep 
 RUN apk add --no-cache openssh-client
+RUN apk add --no-cache openjdk11 --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 
 RUN wget --quiet --output-document=/etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
 	wget https://github.com/sgerrand/alpine-pkg-kafkacat/releases/download/1.5.0-r0/kafkacat-1.5.0-r0.apk && \
