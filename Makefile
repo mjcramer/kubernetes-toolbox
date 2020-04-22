@@ -1,7 +1,8 @@
 
-DOCKER_IMAGE := kubernetes-toolbox
-DOCKER_REPOSITORY := mjcramer
-DOCKER_TAG := 0.2
+# DOCKER_REGISTRY := docker.io 
+DOCKER_REPOSITORY:= mjcramer/kubernetes-toolbox
+DOCKER_TAG := $(shell git describe --tags) 
+DOCKER_IMAGE := ${DOCKER_REPOSITORY}:${DOCKER_TAG}
 
 # Mac or Linux?
 UNAME_S := $(shell uname -s)
@@ -24,19 +25,6 @@ ifeq ($(strip $(DOCKER_WHICH)),)
 	DOCKER_EXISTS := @echo "\nERROR: docker not found.\nSee: https://docs.docker.com/" && exit 1
 endif
 
-# ifeq ($(strip $(DOCKER_TLS_VERIFY)),)
-# 	DOCKER_MACHINE_ENV = @echo "\nERROR: docker environment cannot be found.\nRun: eval \"\$$(docker-machine env $(DOCKER_MACHINE))\"\n" && exit 1
-# endif
-# ifeq ($(strip $(DOCKER_HOST)),)
-# 	DOCKER_MACHINE_ENV = @echo "\nERROR: docker environment cannot be found.\nRun: eval \"\$$(docker-machine env $(DOCKER_MACHINE))\"\n" && exit 1
-# endif
-# ifeq ($(strip $(DOCKER_CERT_PATH)),)
-# 	DOCKER_MACHINE_ENV = @echo "\nERROR: docker environment cannot be found.\nRun: eval \"\$$(docker-machine env $(DOCKER_MACHINE))\"\n" && exit 1
-# endif
-# ifeq ($(strip $(DOCKER_MACHINE_NAME)),)
-# 	DOCKER_MACHINE_ENV = @echo "\nERROR: docker environment cannot be found.\nRun: eval \"\$$(docker-machine env $(DOCKER_MACHINE))\"\n" && exit 1
-# endif
-
 #
 # Targets
 #
@@ -49,7 +37,7 @@ check:
 	$(DOCKER_EXISTS)
 
 build: check
-	docker build -t $(DOCKER_IMAGE):$(DOCKER_TAG) .
+	docker build -t $(DOCKER_IMAGE)
 
 run:
 	docker run --rm -it $(DOCKER_IMAGE):$(DOCKER_TAG)

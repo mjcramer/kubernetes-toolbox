@@ -25,15 +25,22 @@ RUN wget --quiet --output-document=/etc/apk/keys/sgerrand.rsa.pub https://alpine
 
 RUN rm -rf /var/cache/apk/*
 
+ARG scala_version=2.12
+ARG apache_mirror=http://mirror.cogentco.com/pub/apache
+ARG kafka_version=2.5.0
+ARG kafka_path=/opt/kafka
+
 ARG avro_tools_path=/opt/avro-tools
 ARG avro_tools_version=1.8.2
 ARG avro_tools_path=/opt/avro-tools
+
+RUN mkdir -p $kafka_path && \ 
+	wget -qO- $apache_mirror/kafka/$kafka_version/kafka_$scala_version-$kafka_version.tgz | tar -xvz -C $kafka_path
 RUN mkdir -p $avro_tools_path && \
-	wget https://repo1.maven.org/maven2/org/apache/avro/avro-tools/$avro_tools_version/avro-tools-$avro_tools_version.jar -P $avro_tools_path && \
-	wget -qO- http://apache.cs.uu.nl/kafka/2.4.0/kafka_2.12-2.4.0.tgz | tar -xvz
+	wget https://repo1.maven.org/maven2/org/apache/avro/avro-tools/$avro_tools_version/avro-tools-$avro_tools_version.jar -P $avro_tools_path 
 
 ADD bashrc /root/.bashrc
 
-ENV PATH="/kafka_2.12-2.4.0/bin:$avro_tools_path:${PATH}"
+ENV PATH="/kafka_$scala_version-$kafka_version/bin:$avro_tools_path:${PATH}"
 VOLUME /schemas
 ENTRYPOINT /bin/bash
